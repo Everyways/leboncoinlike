@@ -1,0 +1,90 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Sniglet');
+
+// Dropzone
+@import "~dropzone/dist/dropzone.css";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+html {
+    font-size: 0.8rem;
+}
+
+@include media-breakpoint-up(sm) {
+    html {
+        font-size: 1rem;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    html {
+        font-size: 1.4rem;
+    }
+}
+
+body {
+    background-color: #e47517;
+    font-family: 'Sniglet', cursive;
+}
+
+.navbar {
+    background-color: #e4751788;
+}
+
+.navbar-expand-md {
+    @include font-size(1.4rem);
+}
+
+.navbar-expand {
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+.base {
+    fill:#003dd4;
+    cursor: pointer;
+    -webkit-transition: fill .5s ease-out;
+    -moz-transition: fill .5s ease-out;
+    -o-transition: fill .5s ease-out;
+    transition: fill .5s ease-out;
+}
+
+.base:hover {
+    fill: #bd4;
+}
+
+#my-dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 5px;
+    .message {
+        font-family: "Segoe UI Light", "Arial", serif;
+        font-weight: 600;
+        color: #0087F7;
+        @include font-size(1.5em);
+        letter-spacing: 0.05em;
+    }
+}
+
+a.dz-remove {
+    text-decoration: none !important;
+    &:hover {
+        color: red;
+        font-size: 1rem !important;
+    }
+}
+
+a.blockAd {
+    text-decoration: none;
+    color: inherit;
+    &:hover h4 {
+        color: #e47517;
+    }
+    &:hover .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+#accordion .btn-link a {
+    text-decoration: none;
+}
