@@ -110,7 +110,7 @@ class AdController extends Controller
 
         if ($request->session()->has('index')) {
             $index = $request->session()->get('index');
-            Upload::whereIndex($index)->update(['ad_id' => $ad->id, 'index' => 0]);
+            Upload::whereIndex($index)->update(['app_models_ad_id' => $ad->id, 'index' => 0]);
         }
 
         return view('addconfirm');

@@ -46,7 +46,7 @@ Route::prefix('passe')->group(function () {
 });
 
 // Annonces
-Route::resource('annonces', 'AdController')
+Route::resource('annonces', AdController::class)
     ->parameters([
         'annonces' => 'ad'
     ])->except([
@@ -74,12 +74,11 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
     // Annonces a modérer
     Route::prefix('annonces')->group(function () {
-        Route::get('/', 'AdminController@ads')->name('admin.ads');
+        Route::get('/', [AdminController::class, 'ads'])->name('admin.ads');
+        Route::get('obsoletes', [AdminController::class, 'obsoletes'])->name('admin.obsoletes');
         Route::middleware('ajax')->group(function () {
             Route::post('approve/{ad}', [AdminController::class, 'approve'])->name('admin.approve');
             Route::post('refuse', [AdminController::class, 'refuse'])->name('admin.refuse');
-            Route::post('addweek/{ad}', [AdminController::class, 'addWeek'])->name('admin.addweek');
-            Route::delete('destroy/{ad}', [AdminController::class, 'destroy'])->name('admin.destroy');
         });
     });
 
@@ -89,6 +88,15 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::post('refuse', [AdminController::class, 'messageRefuse'])->name('admin.message.refuse');
     });
 
+});
+
+
+// Admin and user
+Route::prefix('admin/annonces')->group(function () {
+    Route::middleware('ajax')->group(function () {
+        Route::post('addweek/{ad}', [AdminController::class, 'addWeek'])->name('admin.addweek');
+        Route::delete('destroy/{ad}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    });
 });
 
 // Admin and user

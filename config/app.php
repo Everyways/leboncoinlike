@@ -177,6 +177,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 
+        // Image
+        Intervention\Image\ImageServiceProvider::class,
+
         // Debug bar -> https://github.com/barryvdh/laravel-debugbar
         Barryvdh\Debugbar\ServiceProvider::class,
     ],
@@ -230,6 +233,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        //Add Image
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

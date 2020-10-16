@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\View;
 use App\Notifications\AdMessage;
 use App\Repositories\{AdRepository, MessageRepository};
 use App\Http\Requests\{MessageAd, EmailUpdate};
@@ -46,13 +46,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+
         $ads = $this->adRepository->getByUser($request->user());
-
-        $adAttenteCount = $this->adRepository->noActiveCount($ads);
-        $adActivesCount = $this->adRepository->activeCount($ads);
+        
+        $adAttenteCount = $this->adRepository->noActiveCount();
+        $adActivesCount = $this->adRepository->activeCount();
         $adPerimesCount = $this->adRepository->obsoleteCount($ads);
-
-        return view('user.index', compact('adActivesCount', 'adPerimesCount', 'adAttenteCount'));
+        $aArray = compact('adActivesCount', 'adPerimesCount', 'adAttenteCount');
+        
+        return view('user.index', $aArray);
     }
 
     /**
@@ -89,7 +91,7 @@ class UserController extends Controller
     {
         $ads = $this->adRepository->active($request->user(), 5);
 
-        return view('user.actives', compact('ads'));
+        return view('user.active', compact('ads'));
     }
 
     /**
@@ -115,7 +117,7 @@ class UserController extends Controller
     {
         $ads = $this->adRepository->obsoleteForUser($request->user(), 5);
 
-        return view('user.obsoletes', compact('ads'));
+        return view('user.obsolete', compact('ads'));
     }
 
     /**

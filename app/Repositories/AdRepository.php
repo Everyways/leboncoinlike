@@ -68,11 +68,8 @@ class AdRepository
     /**
      * Get the no active ads count.
      */
-    public function noActiveCount($ads = null)
+    public function noActiveCount()
     {
-        if ($ads) {
-            return $ads->where('active', false)->count();
-        }
         return Ad::where('active', false)->count();
     }
 
@@ -91,11 +88,8 @@ class AdRepository
      *
      * @param
      */
-    public function obsoleteCount($ads = null)
+    public function obsoleteCount()
     {
-        if ($ads) {
-            return $ads->where('active', true)->where('limit', '<', Carbon::now())->count();
-        }
         return Ad::where('limit', '<', Carbon::now())->count();
     }
 
@@ -150,9 +144,9 @@ class AdRepository
      *
      * @param
      */
-    public function activeCount($ads)
+    public function activeCount()
     {
-        return $ads->where('active', true)->where('limit', '>=', Carbon::now())->count();
+        return Ad::query()->where('active', true)->where('limit', '>=', Carbon::now())->count();
     }
 
     /**
@@ -162,7 +156,7 @@ class AdRepository
      */
     public function getByUser($user)
     {
-        return $user->ads()->get();
+        return Ad::query()->where('user_id', '=', $user->id);
     }
 
     /**
@@ -173,7 +167,7 @@ class AdRepository
      */
     public function active($user, $nbr)
     {
-        return $user->ads()->whereActive(true)->where('limit', '>=', Carbon::now())->paginate($nbr);
+        return Ad::query()->where('user_id', '=', $user->id)->where('active', true)->where('limit', '>=', Carbon::now())->paginate($nbr);
     }
 
     /**
@@ -194,7 +188,7 @@ class AdRepository
      */
     public function attente($user, $nbr)
     {
-        return $user->ads()->whereActive(false)->paginate($nbr);
+        return Ad::query()->where('user_id', '=', $user->id)->where('active', false)->paginate($nbr);
     }
 
     /**
@@ -205,6 +199,6 @@ class AdRepository
      */
     public function obsoleteForUser($user, $nbr)
     {
-        return $user->ads()->where('limit', '<', Carbon::now())->latest('limit')->paginate($nbr);
+        return Ad::query()->where('user_id', '=', $user->id)->where('limit', '<', Carbon::now())->latest('limit')->paginate($nbr);
     }
 }

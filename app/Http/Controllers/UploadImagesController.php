@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Storage, File};
+// import the Intervention Image Manager Class
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 use App\Models\AppModelsUpload as Upload;
 
 class UploadImagesController extends Controller
@@ -42,19 +44,22 @@ class UploadImagesController extends Controller
 
         for ($i = 0; $i < count($photos); $i++) {
             $photo = $photos[$i];
-            $name = str_random(30);
+            $name = Str::random(30);
             $save_name = $name . '.' . $photo->getClientOriginalExtension();
+
             Image::make($photo)
                 ->resize(150, null, function ($constraints) {
                     $constraints->aspectRatio();
                 })
                 ->save($this->thumbs_path . '/' . $save_name);
+
             $photo->move($this->photos_path, $save_name);
+
             $upload = new Upload();
             $upload->filename = $save_name;
             $upload->original_name = basename($photo->getClientOriginalName());
             $upload->index = $request->session()->get('index');
-            $upload->ad_id = 0;
+            $upload->app_models_ad_id = 0;
             $upload->save();
         }
     }
